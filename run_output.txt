@@ -1,4 +1,0 @@
-Payment successful for Transaction ID 1 using Card
-Refund successful for Transaction ID 1
-Transaction History:
-Transaction ID: 1, Type: PAYTM, Amount: 50.00

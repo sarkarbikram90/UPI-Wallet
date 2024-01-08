@@ -1,4 +1,4 @@
-Requirements: Create design (class diagram and schema design) and write working code for a command-line payment application that supports the following use cases.
+Write working code for a command-line payment application that supports the following use cases.
 
 Allow users to create accounts via their phone number and password.
 
