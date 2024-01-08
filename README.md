@@ -3,7 +3,7 @@
 
 Go Wallet is a command-line payment application written in Go (Golang). It provides users with a simple yet powerful interface to manage their transactions, send money to other users, and view transaction history.
 
-## Features:
+# Features:
 
 # Account Management:
 
