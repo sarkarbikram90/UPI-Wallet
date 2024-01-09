@@ -53,8 +53,8 @@ View Transaction History:
 How to Run:
 
 # Clone the repository: git clone https://github.com/sarkarbikram90/go-wallet.git
-Navigate to the project directory: # cd go-wallet
-Run the application: # go run main.go
+# cd go-wallet
+# go run main.go
 
 Contributions to Go Wallet are welcome! Feel free to open issues, propose enhancements, or submit pull requests.
 
