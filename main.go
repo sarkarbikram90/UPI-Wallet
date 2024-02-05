@@ -2,37 +2,25 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"strings"
 )
 
 // User represents a user of the application
 type User struct {
-	ID           int
-	PhoneNumber  string
-	Password     string
-	Name         string
-	Email        string
-	AccountMoney float64
+	ID                string // Unique user ID generated based on name and mobile number
+	Name              string
+	PhoneNumber       string
+	BankAccountNumber string
+	AccountMoney      float64 // Balance
+	PIN               string  // 4 digit UPI PIN
 }
 
 // Transaction represents a payment transaction
 type Transaction struct {
-	ID              int
-	FromUserID      int
-	ToUserID        int
-	Amount          float64
-	TransactionType string
-	CreatedAt       time.Time
+	FromUserID string
+	ToUserID   string
+	Amount     float64
 }
-
-// PaymentMethod represents different payment methods
-type PaymentMethod string
-
-const (
-	Card       PaymentMethod = "Card"
-	UPI        PaymentMethod = "UPI"
-	Netbanking PaymentMethod = "Netbanking"
-)
 
 // Application represents the payment application
 type Application struct {
@@ -40,93 +28,176 @@ type Application struct {
 	Transactions []Transaction
 }
 
-// RegisterUser allows users to create accounts via their phone number and password
-func (app *Application) RegisterUser(phoneNumber, password string) int {
-	userID := len(app.Users) + 1
+// RegisterUser allows users to create accounts via their phone number, bank account number, and PIN
+func (app *Application) RegisterUser() {
+	var name, phoneNumber, bankAccountNumber, pin string
+
+	fmt.Println("Welcome to the UPI payment wallet, to continue please register")
+	fmt.Print("Please enter your name: ")
+	fmt.Scanln(&name)
+
+	fmt.Print("Please enter your mobile number: ")
+	fmt.Scanln(&phoneNumber)
+
+	fmt.Print("Please enter your bank account number: ")
+	fmt.Scanln(&bankAccountNumber)
+
+	fmt.Print("Please create your UPI PIN: ")
+	fmt.Scanln(&pin)
+
+	// Generate unique user ID based on name and mobile number
+	userID := generateUserID(name, phoneNumber)
+
 	user := User{
-		ID:          userID,
-		PhoneNumber: phoneNumber,
-		Password:    password,
+		ID:                userID,
+		PhoneNumber:       phoneNumber,
+		PIN:               pin,
+		Name:              name,
+		BankAccountNumber: bankAccountNumber,
 	}
 	app.Users = append(app.Users, user)
+	fmt.Printf("Welcome to your UPI wallet account, %s!\n", user.Name)
+	fmt.Printf("Your user ID is: %s\n", user.ID)
+}
+
+// generateUserID generates a unique user ID based on name and mobile number
+func generateUserID(name, phoneNumber string) string {
+	// Remove spaces from the name and concatenate with the mobile number
+	userID := strings.ReplaceAll(name, " ", "") + "-" + phoneNumber
 	return userID
 }
 
-// UpdateUser allows users to update their profile details
-func (app *Application) UpdateUser(userID int, name, email, phoneNumber string) {
+// SendMoney allows users to send money to another user
+func (app *Application) SendMoney() {
+	var senderID, recipientID string
+	var amount float64
+
+	fmt.Print("Enter your user ID: ")
+	fmt.Scanln(&senderID)
+
+	fmt.Print("Enter recipient's user ID: ")
+	fmt.Scanln(&recipientID)
+
+	fmt.Print("Enter amount to send: ")
+	fmt.Scanln(&amount)
+
+	// Find the sender and recipient by ID
+	var senderIndex, recipientIndex int
+	for i, user := range app.Users {
+		if user.ID == senderID {
+			senderIndex = i
+		}
+		if user.ID == recipientID {
+			recipientIndex = i
+		}
+	}
+
+	if senderIndex == -1 || recipientIndex == -1 {
+		fmt.Println("Sender or recipient not found.")
+		return
+	}
+
+	// Check if sender has sufficient balance
+	if app.Users[senderIndex].AccountMoney < amount {
+		fmt.Println("Insufficient balance.")
+		return
+	}
+
+	// Perform the transaction
+	app.Users[senderIndex].AccountMoney -= amount
+	app.Users[recipientIndex].AccountMoney += amount
+
+	fmt.Printf("Payment successful. New balance of sender (%s): %.2f, recipient (%s): %.2f\n",
+		app.Users[senderIndex].Name, app.Users[senderIndex].AccountMoney,
+		app.Users[recipientIndex].Name, app.Users[recipientIndex].AccountMoney)
+}
+
+// AddMoney allows users to add money to their wallet
+func (app *Application) AddMoney() {
+	var userID string
+	var amount float64
+
+	fmt.Print("Please enter your user ID: ")
+	fmt.Scanln(&userID)
+
+	fmt.Print("Enter amount to add: ")
+	fmt.Scanln(&amount)
+
+	// Find the user by ID
+	var user *User
 	for i := range app.Users {
 		if app.Users[i].ID == userID {
-			app.Users[i].Name = name
-			app.Users[i].Email = email
-			app.Users[i].PhoneNumber = phoneNumber
+			user = &app.Users[i]
 			break
 		}
 	}
-}
 
-// CreateTransaction allows users to send money to another user or a bank account
-func (app *Application) CreateTransaction(transactionType string, fromUserID, toUserID int, amount float64, accountDetails ...string) int {
-	transactionID := len(app.Transactions) + 1
-	transaction := Transaction{
-		ID:              transactionID,
-		FromUserID:      fromUserID,
-		ToUserID:        toUserID,
-		Amount:          amount,
-		TransactionType: transactionType,
-		CreatedAt:       time.Now(),
+	if user == nil {
+		fmt.Println("User not found.")
+		return
 	}
-	app.Transactions = append(app.Transactions, transaction)
-	return transactionID
+
+	// Update user's account balance
+	user.AccountMoney += amount
+	fmt.Printf("Amount has been added, your account balance is %.2f!\n", user.AccountMoney)
 }
 
-// MakePayment allows users to make payment for the transaction via Card/UPI/Netbanking
-func (app *Application) MakePayment(transactionID int, paymentMethod PaymentMethod, paymentDetails ...string) {
-	// Implement payment logic here
-	// For simplicity, we'll just print the payment details
-	fmt.Printf("Payment successful for Transaction ID %d using %s\n", transactionID, paymentMethod)
-}
+// CheckBalance allows users to check their account balance
+func (app *Application) CheckBalance() {
+	var userID string
 
-// RefundTransaction allows users to refund a transaction
-func (app *Application) RefundTransaction(transactionID int) {
-	// Implement refund logic here
-	// For simplicity, we'll just print the refund details
-	fmt.Printf("Refund successful for Transaction ID %d\n", transactionID)
-}
+	fmt.Print("Enter your user ID: ")
+	fmt.Scanln(&userID)
 
-// ViewTransactionsHistory allows users to view transaction history
-func (app *Application) ViewTransactionsHistory(userID int) []Transaction {
-	var userTransactions []Transaction
-	for _, transaction := range app.Transactions {
-		if transaction.FromUserID == userID || transaction.ToUserID == userID {
-			userTransactions = append(userTransactions, transaction)
+	// Find the user by ID
+	for _, user := range app.Users {
+		if user.ID == userID {
+			fmt.Printf("Your current balance: %.2f\n", user.AccountMoney)
+			return
 		}
 	}
-	return userTransactions
+
+	fmt.Println("User not found.")
 }
 
 func main() {
 	// Create a new instance of the payment application
 	app := Application{}
 
-	// Register a new user
-	userID := app.RegisterUser("1234567890", "password")
+	// Continue loop
+	for {
+		fmt.Println("\nChoose an option:")
+		fmt.Println("1. Register user")
+		fmt.Println("2. Add money")
+		fmt.Println("3. Send money")
+		fmt.Println("4. Check balance")
+		fmt.Println("5. Exit")
 
-	// Update user profile
-	app.UpdateUser(userID, "John Doe", "john@example.com", "1234567890")
+		var choice int
+		fmt.Print("Enter your choice: ")
+		fmt.Scanln(&choice)
 
-	// Create a transaction to send money to another user
-	transactionID := app.CreateTransaction("PAYTM", userID, 2, 50.0)
+		switch choice {
+		case 1:
+			app.RegisterUser()
+		case 2:
+			app.AddMoney()
+		case 3:
+			app.SendMoney()
+		case 4:
+			app.CheckBalance()
+		case 5:
+			fmt.Println("Exiting...")
+			return
+		default:
+			fmt.Println("Invalid choice. Please try again.")
+		}
 
-	// Make payment for the transaction using Card
-	app.MakePayment(transactionID, Card, "CardDetails...")
-
-	// Refund the transaction
-	app.RefundTransaction(transactionID)
-
-	// View transaction history
-	transactions := app.ViewTransactionsHistory(userID)
-	fmt.Println("Transaction History:")
-	for _, transaction := range transactions {
-		fmt.Printf("Transaction ID: %d, Type: %s, Amount: %.2f\n", transaction.ID, transaction.TransactionType, transaction.Amount)
+		var continueOption string
+		fmt.Print("\nDo you want to continue? (continue/exit): ")
+		fmt.Scanln(&continueOption)
+		if continueOption == "exit" {
+			break
+		}
 	}
 }
