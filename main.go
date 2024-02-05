@@ -194,9 +194,9 @@ func main() {
 		}
 
 		var continueOption string
-		fmt.Print("\nDo you want to continue? (continue/exit): ")
+		fmt.Print("\nDo you want to perform any other operations? (yes/no): ")
 		fmt.Scanln(&continueOption)
-		if continueOption == "exit" {
+		if continueOption == "no" {
 			break
 		}
 	}

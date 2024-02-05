@@ -6,8 +6,7 @@ It's a command-line payment application written in Go. It provides users with a 
 
 # How to use it:
 
-Please ensure you have Go installed on your system.
-download and install Go. 
+Please ensure you have Go installed on your system. If not, download and install Go from here.
 
 ```sh 
 https://go.dev/dl/ 
@@ -29,6 +28,15 @@ cd UPI-Wallet
 ```sh 
 go run main.go 
 ```
+
+```sh 
+go build 
+```
+
+![Screenshot] ![alt text](image.png)
+![Screenshot] ![alt text](image-1.png)
+
+
 
 
 # Features:
