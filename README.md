@@ -7,14 +7,24 @@ It's a command-line payment application written in Go. It provides users with a 
 # How to use it:
 
 Please ensure you have Go installed on your system.
-refer to ```sh https://go.dev/dl/ ``` download and install Go.
+refer to ```sh 
+https://go.dev/dl/ 
+``` 
+download and install Go.
 
 # Clone the repo
-```sh https://github.com/sarkarbikram90/UPI-Wallet.git ```
+```sh 
+https://github.com/sarkarbikram90/UPI-Wallet.git 
 
-```sh cd UPI-Wallet ```
+```
 
-```sh go run main.go ```
+```sh 
+cd UPI-Wallet 
+```
+
+```sh 
+go run main.go 
+```
 
 
 # Features:
