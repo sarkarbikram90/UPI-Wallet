@@ -40,13 +40,13 @@ Users can create accounts by providing their Profile details, including name, ph
 # Transaction Handling:
 
 # Users can 
-```sh
+
 1. Send money to other users.
 2. Receive money from other uers.
 3. Check balance after adding money.
 4. Check balance after sending money.
 5. Check balance after receiving money.
-```
+
 
 ##### Register User:
 1. Name
