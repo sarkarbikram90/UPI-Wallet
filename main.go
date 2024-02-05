@@ -167,7 +167,7 @@ func main() {
 	// Continue loop
 	for {
 		fmt.Println("\nChoose an option:")
-		fmt.Println("1. Register user")
+		fmt.Println("1. Register")
 		fmt.Println("2. Add money")
 		fmt.Println("3. Send money")
 		fmt.Println("4. Check balance")

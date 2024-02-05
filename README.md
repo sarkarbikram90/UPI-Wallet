@@ -33,7 +33,11 @@ go run main.go
 go build 
 ```
 
+# An user can perform the following operations
 ![alt text](image.png)
+
+# Register 
+#### This will allow an user to create a wallet with user details such as Name, Mobile number, Bank account number and UPI PIN
 ![alt text](image-1.png)
 
 
