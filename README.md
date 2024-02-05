@@ -33,8 +33,8 @@ go run main.go
 go build 
 ```
 
-![Screenshot] ![alt text](image.png)
-![Screenshot] ![alt text](image-1.png)
+![alt text](image.png)
+![alt text](image-1.png)
 
 
 
