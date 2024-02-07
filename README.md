@@ -29,6 +29,8 @@ cd UPI-Wallet
 go run main.go 
 ```
 
+# Make it executable
+
 ```sh 
 go build 
 ```
