@@ -29,16 +29,18 @@ cd UPI-Wallet
 go run main.go 
 ```
 
+# Make it executable
+
 ```sh 
 go build 
 ```
 
 # An user can perform the following operations
-![alt text](image-2.png)
+![alt text](image-1.png)
 
 # Register 
 #### This will allow an user to create a wallet with user details such as Name, Mobile number, Bank account number and UPI PIN
-![alt text](image-3.png)
+![alt text](image-2.png)
 
 
 # Features:
@@ -64,6 +66,4 @@ Users can create accounts by providing their Profile details, such as name, phon
 3. Bank Account Number
 4. UPI PIN
 
-License:
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+License: This project is licensed under the MIT License.
