@@ -66,7 +66,7 @@ Users can create accounts by providing their Profile details, including name, ph
 3. Bank Account Number
 4. UPI PIN
 
-I intend to add more features in the coming weeks so contributions are welcome! Feel free to open issues, propose enhancements, or submit pull requests.
+I intend to add more features in the coming weeks.
 
 License:
 
