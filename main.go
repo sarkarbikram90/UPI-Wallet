@@ -166,11 +166,11 @@ func main() {
 
 	// Continue loop
 	for {
-		fmt.Println("\nChoose an option:")
+		fmt.Println("\nWelcome to UPI Wallet, to conitnue choose an option:")
 		fmt.Println("1. Register")
 		fmt.Println("2. Add money")
 		fmt.Println("3. Send money")
-		fmt.Println("4. Check balance")
+		fmt.Println("4. Check calance")
 		fmt.Println("5. Exit")
 
 		var choice int
@@ -197,6 +197,7 @@ func main() {
 		fmt.Print("\nDo you want to perform any other operations? (yes/no): ")
 		fmt.Scanln(&continueOption)
 		if continueOption == "no" {
+			fmt.Println("Thank you for choosing UPI Wallet")
 			break
 		}
 	}

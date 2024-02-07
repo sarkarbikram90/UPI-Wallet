@@ -29,31 +29,27 @@ cd UPI-Wallet
 go run main.go 
 ```
 
-# Make it executable
-
 ```sh 
 go build 
 ```
 
 # An user can perform the following operations
-![alt text](image.png)
+![alt text](image-2.png)
 
 # Register 
 #### This will allow an user to create a wallet with user details such as Name, Mobile number, Bank account number and UPI PIN
-![alt text](image-1.png)
-
-
+![alt text](image-3.png)
 
 
 # Features:
 
 # Account Management:
 
-Users can create accounts by providing their Profile details, including name, phone number, bank account number and UPI PIN.
+Users can create accounts by providing their Profile details, such as name, phone number, bank account number and UPI PIN.
 
 # Transaction Handling:
 
-# Users can 
+# Users can following operations
 
 1. Send money to other users.
 2. Receive money from other uers.
@@ -67,8 +63,6 @@ Users can create accounts by providing their Profile details, including name, ph
 2. Mobile Number
 3. Bank Account Number
 4. UPI PIN
-
-I intend to add more features in the coming weeks.
 
 License:
 
